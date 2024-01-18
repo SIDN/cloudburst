@@ -1,0 +1,6 @@
+old
+*.pyc
+*.swp
+.vagrant
+blocklists/*
+wg-ui-auto-user

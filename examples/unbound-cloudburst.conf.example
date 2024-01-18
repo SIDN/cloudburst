@@ -1,0 +1,22 @@
+server:
+    auto-trust-anchor-file: "/var/lib/unbound/root.key"
+    port: 53
+    interface: 192.168.10.0
+    interface: fd00:10::
+    interface: ::0
+
+    # limit access to internal ranges only
+    access-control: 192.168.0.0/16 allow
+    access-control: fd00::/8 allow
+
+    # intercept requests to the cloudburst host and point them to the internal adresses 
+    domain-insecure: 'cloudburst.example.nl'
+    local-zone: 'cloudburst.example.nl' redirect
+    local-data: 'cloudburst.example.nl A 192.168.10.0'
+    local-data: 'cloudburst.example.nl AAAA fd00:10::'
+
+    # suggest browser/os to use this resolver 
+    local-zone: "use-application-dns.net" always_nxdomain
+    local-zone: "cloudflare-dns.com" always_nxdomain
+    local-zone: "dns.google" always_nxdomain
+    local-zone: "dns.quad9.net" always_nxdomain 

@@ -1,0 +1,63 @@
+[cb-ui]
+iptables = "/sbin/iptables"
+ip6tables = "/sbin/ip6tables"
+listen = "127.0.0.1"
+internal_networks = ["192.168.0.0/16", "fd00::/8"]
+loopback_addrs = ["127.0.0.1", "::0", "fd00:10::", "fd00:10::192:168:10:0"]
+shortlist = ["google", "aws", "microsoft", "meta", "cloudflare", "akamai"]
+
+[clouds]
+
+[clouds.google]
+name = "Google"
+ipset = "google"
+blocklists = ["https://www.gstatic.com/ipranges/goog.json"]
+parsers = ["google_json_parser"]
+
+[clouds.aws]
+name = "Amazon Web Services"
+ipset = "aws"
+blocklists = ["https://ip-ranges.amazonaws.com/ip-ranges.json"]
+parsers = ["aws_json_parser"]
+
+[clouds.microsoft]
+name = "Microsoft"
+ipset = "microsoft"
+# parsers = ["azure_json_parser"]
+blocklists = [ "asn://4/8068", "asn://4/8069", "asn://4/8075", "asn://6/8068", "asn://6/8069", "asn://6/8075"]
+
+[clouds.cloudflare]
+name = "CloudFlare"
+ipset = "cloudflare"
+blocklists = ["https://www.cloudflare.com/ips-v4", "https://www.cloudflare.com/ips-v6"]
+
+[clouds.akamai]
+name = "Akamai"
+ipset = "akamai"
+blocklists = ["https://raw.githubusercontent.com/SecOps-Institute/Akamai-ASN-and-IPs-List/master/akamai_ip_cidr_blocks.lst"]
+
+[clouds.fastly]
+name = "Fastly"
+ipset = "fastly"
+blocklists = ["https://api.fastly.com/public-ip-list"]
+parsers = ["fastly_json_parser"]
+
+[clouds.meta]
+name = "Meta/Instagram"
+ipset = "meta"
+blocklists = [ "asn://4/32943", "asn://6/32943"]
+
+[clouds.alibaba]
+name = "Alibaba"
+ipset = "alibaba"
+blocklists = [ "asn://4/45102", "asn://6/45102", "asn://4/211914", "asn://6/211914"]
+
+[clouds.tencent]
+name = "Tencent"
+ipset = "tencent"
+blocklists = [ "asn://4/132203", "asn://6/132203", "asn://4/132591", "asn://6/132591"]
+
+[clouds.baidu]
+name = "Baidu"
+ipset = "baidu"
+blocklists = [ "asn://4/38627", "asn://6/38627", "asn://4/38365", "asn://6/38365"]

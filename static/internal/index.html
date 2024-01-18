@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Bootstrap CSS -->
+		<link href="static/bootstrap.min.css" rel="stylesheet">
+
+		<title>Cloudburst: control your clouds</title>
+
+		<script>
+			async function getClouds() {
+				const apiUrl = "/clouds";
+				const res = await fetch(apiUrl);
+				//clients = Object.entries(await res.json());
+				return res.json();
+			}
+			
+			function getBlockedClouds() {
+  		      let cookie = document.cookie;
+  		      cookie_arr = cookie.split('; ');
+  		      for (var i = 0; i< cookie_arr.length; i++) {
+  		          name = cookie_arr[i].split('=')[0];
+  		          value = cookie_arr[i].split('=')[1];
+  		          if (name == "blocked") {
+  					  return value.split('-');
+  		          }
+  		      }
+  		      return [];
+			}
+
+			function showClouds() {
+				getClouds().then( clouds => {
+					if (clouds.length < 1) {
+						// Do something with error
+						console.log("Error: no clouds found")
+					} else {
+						// Obtain all clouds that are already blocked
+						blocked = getBlockedClouds()
+						// Step 1: iterate over supported clouds, and show them on screen
+						Object.keys(clouds).forEach( cloud => {
+							var div = document.getElementById('cb_burst_template');
+							clone = div.cloneNode(true);
+							clone.id = "cloud_" + cloud;
+							clone.classList.remove("d-none");
+							clone.querySelector("input").name = cloud;
+							if (blocked.includes(cloud)) {
+								clone.querySelector("input").checked = true;
+							}
+							
+							clone.querySelector("label").textContent = clouds[cloud].name;
+							
+							document.getElementById('cb_burst_list').appendChild(clone);
+							
+						});
+						
+						// Step 2: disable loading screen
+						document.getElementById("cb_loading").classList.add("d-none");
+					}
+				});
+			}
+			
+			function submitIframe(element, name) {
+			    element.target = name;
+				element.submit();
+			};
+
+			async function doBurst() {
+				// Submit two times. First as IPv6, then as IPv4.
+
+				// Submit IPv6 (into hidden iframe)
+				url = new URL(document.getElementById("form_cloud").action)
+				url.port = 4436;
+				document.getElementById("form_cloud").action = url.toString();
+				submitIframe(document.getElementById('form_cloud'), "v6submit");
+
+				await new Promise(r => setTimeout(r, 1000));
+
+				// Submit IPv4
+				url.port = 4434;
+				form = document.getElementById("form_cloud");
+				form.action = url.toString();
+				form.name = "test";
+				form.target = "";
+				form.submit();
+			}
+
+			window.addEventListener('load', function () {
+				showClouds();
+			});
+		</script>
+			
+		<style>
+			.form-check-input:checked {
+				background-color: red !important;
+				border-color: red !important;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="static/bootstrap.bundle.min.js" async></script>
+
+		<div class="container" id="main_container">
+			<!-- Content here -->
+			<div class="p-3 mb-2 text-body text-center">
+				<div class="row justify-content-center">
+						<div class="col-3 text-center">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-cloud-slash text-danger img-fluid" viewBox="0 0 16 16">
+							  <path fill-rule="evenodd" d="M3.112 5.112a3.125 3.125 0 0 0-.17.613C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13H11l-1-1H3.781C2.231 12 1 10.785 1 9.318c0-1.365 1.064-2.513 2.46-2.666l.446-.05v-.447c0-.075.006-.152.018-.231l-.812-.812zm2.55-1.45-.725-.725A5.512 5.512 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773a3.2 3.2 0 0 1-1.516 2.711l-.733-.733C14.498 11.378 15 10.626 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3c-.875 0-1.678.26-2.339.661z"/>
+							  <path d="m13.646 14.354-12-12 .708-.708 12 12-.707.707z"/>
+							</svg>
+						</div>
+				</div>
+
+				<p class="fw-bold display-3">Cloudburst</p>
+				<p class="fw-lighter">How centralised is your Internet?</p>
+			</div>
+			
+			<div class="p-3 mb-2 text-body text-center">
+				Welcome to Cloudburst, where you can experience the effects of the centralisation on the Internet. What happens when a large cloud provider goes offline? Test it here! For more information read our <a href="faq">FAQ</a>.
+			</div>
+
+			<div class="row justify-content-center" id="cb_loading">
+				<div class="col p-3 mb-2 me-2 text-body text-center border rounded-3 bg-primary-subtle">
+					<p>Connecting to Cloudburst...</p>
+					<div class="spinner-border" role="status">
+					  <span class="visually-hidden">Loading...</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="row justify-content-center" id="cb_clouds">
+				<div class="col-lg-4 p-3 mb-2 me-2 text-body text-center border rounded-3">
+					<p>Select the clouds to block and click 'Burst' to activate.</p>
+					<form method="post" id="form_cloud" action="burst">
+						
+						<div class="m-3 p-3 d-none" id="cb_burst_template">
+							<div class="form-check form-switch text-start">
+								<input type="checkbox" class="cb-switch form-check-input" role="switch" name="CLOUD" />
+								<label class="cb-swich-label form-check-label" for="darkSwitch">CLOUD</label>
+							</div>
+						</div>
+						
+						<div id="cb_burst_list"></div> <!-- Shows the list of all clouds that can be bursted -->
+						
+						<input type="button" name="burst" class="btn btn-danger" value="Burst &rarr;" onclick="doBurst()" />
+					</form>
+				</div>
+			</div>
+
+		  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+		    <div class="col d-flex align-items-center">
+		      <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+		        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+		      </a>
+		      <span class="mb-3 mb-md-0 text-body-secondary">Powered by <a href="https://www.sidnlabs.nl">SIDN Labs</a>.</span>
+		    </div>
+		  </footer>
+		</div>
+		<iframe name="v6submit" id="v6submit" hidden />
+	</body>
+</html>	
+			
+			
+
+<!--
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+	<body>
+		<div>
+			<form method="post" id="form_cloud" action="burst">
+				<select id="select_cloud" name="select_cloud" multiple>
+					<option value="aws">Amazon Web Services</option>
+					<option value="google">Google Cloud Platform</option>
+					<option value="azure">Microsoft Azure</option>
+					<option value="akamai">Akamai</option>
+					<option value="cloudflare">Cloudflare</option>
+					<option value="o356">Microsoft office356"</option>
+				</select>
+				<input type="submit" name="burst" value="Burst" />
+			</form>
+	</body>
+</html>
+-->

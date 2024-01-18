@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="static/bootstrap.min.css" rel="stylesheet">
+
+  <title>Cloudburst: and the cloud is gone.</title>
+</head>
+
+<body>
+  <script src="static/bootstrap.bundle.min.js" async></script>
+
+
+  <div class="container" id="main_container">
+    <!-- Content here -->
+    <div class="p-3 mb-2 text-body text-center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="currentColor"
+        class="bi bi-cloud-slash text-danger" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M3.112 5.112a3.125 3.125 0 0 0-.17.613C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13H11l-1-1H3.781C2.231 12 1 10.785 1 9.318c0-1.365 1.064-2.513 2.46-2.666l.446-.05v-.447c0-.075.006-.152.018-.231l-.812-.812zm2.55-1.45-.725-.725A5.512 5.512 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773a3.2 3.2 0 0 1-1.516 2.711l-.733-.733C14.498 11.378 15 10.626 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3c-.875 0-1.678.26-2.339.661z" />
+        <path d="m13.646 14.354-12-12 .708-.708 12 12-.707.707z" />
+      </svg>
+      <p class="fw-bold display-1">Cloudburst</p>
+      <p class="fw-lighter">There is no such things as the cloud... anymore.</p>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faqh1">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+               What is your goal with the cloudburst demo?
+          </button>
+        </h2>
+        <div id="faq1" class="accordion-collapse collapse show" aria-labelledby="faq1h">
+          <div class="accordion-body">
+               We are worried with how centralized the internet has become. This centralization makes the internet more vulnerable. If everything goes well the effects of centralization are unnoticable. Yet, <strong>we are curious see how we are affected when something does go wrong in a cloud</strong>. Aren't you?
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faqh2">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+            What data do you store and collect from me?
+          </button>
+        </h2>
+        <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faqh2">
+          <div class="accordion-body">
+            <p>
+            <strong>As little as possible.</strong> We are privacy nerds, we would very much like to say "we dont collect your data".
+            </p>
+            Unfortunately, we need some information to make things work:
+            <ul>
+              <li>connectivity data may end up in our logs for debugging purposes</li>
+              <li>your current IP address is needed in case of a VPN to talk back to you</li>
+            </ul>
+            All data and log files will be cleared after the event.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faqh3">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+            Are there any limitations effects you show in the demo? 
+          </button>
+        </h2>
+        <div id="faq3" class="accordion-collapse collapse" aria-labelledby="faqh3">
+          <div class="accordion-body">
+            
+            <p>
+
+            We can only block the traffic that goes through our gateway. If some platform depends on another platform behind the scene we cannot
+            block that. Thus, in reallity, the effects are likely worse than we can demonstrate.
+            </p>
+
+            <p>
+            The blocklists may not be accurate. We work with both officialy published lists and with lists based on what is
+            announced by the Autonomous Systems of the service provider. Both could be incomplete.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faqh4">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+            What software did you use to create cloudburst?
+          </button>
+        </h2>
+        <div id="faq4" class="accordion-collapse collapse" aria-labelledby="faqh4">
+          <div class="accordion-body">
+            <ul>
+              <li><a href="https://git.aperture-labs.org/AS59645">wg-ui-auto-user</a>, check out the <a href="https://doing-stupid-things.as59645.net/payload/is/just/packet/overhead/2022/10/02/making-it-ping-when-it-shouldnt-part-1.html">blog</a></li>
+              <li><a href="https://github.com/EmbarkStudios/wg-ui">wg-ui</a></li>
+              <li><a href="https://www.wireguard.com">wireguard</a></li>
+              <li><a href="https://www.python.org/">python</a> with <a href="https://bottlepy.org/">bottle.py</a> and requests</li>
+              <li><a href="https://www.nginx.com/">nginx</a></li>
+              <li><a href="https://www.turris.com/en/omnia/overview/">omnia turris</a>
+              <li><a href="https://www.debian.org/">debian</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="faqh4">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+               Is there any research done about the effects of centralization?
+            </button>
+          </h2>
+          <div id="faq4" class="accordion-collapse collapse" aria-labelledby="faqh4">
+            <div class="accordion-body">
+              <ul>
+                <li><a href="https://doi.org/10.1145/3419394.3423625">Clouding up the Internet: how centralized is DNS traffic becoming?</a></li>
+                <li><a href="https://arxiv.org/abs/2104.09462">Heads in the Clouds: Measuring the Implications of Universities Migrating to Public Clouds</a></li>
+                <li>Your paper on centralization here? let us know.</li>
+              </ul>
+            </div>
+          </div>
+      </div>
+    </div>
+      <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <div class="col d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+              <svg class="bi" width="30" height="24">
+                <use xlink:href="#bootstrap"></use>
+              </svg>
+            </a>
+            <span class="mb-3 mb-md-0 text-body-secondary">Powered by <a href="https://www.sidnlabs.nl">SIDN Labs</a>.
+              Thanks to wg-ui and wg-ui-auto-user.</span>
+          </div>
+        </footer>
+      </div>
+</body>
+
+</html>
+
+
+<!--
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cloudburst</title>
+</head>
+<body>
+<script>
+	let user = null;
+
+  function getUserFromCookie() {
+      let cookie = document.cookie;
+      cookie_arr = cookie.split(';');
+      for (var i = 0; i< cookie_arr.length; i++) {
+          name = cookie_arr[i].split('=')[0];
+          value = cookie_arr[i].split('=')[1];
+          if (name == "wguser") {
+              user = value;
+             return user;
+          }
+      }
+      return null
+  }
+
+
+  async function getClients() {
+      const clientsUrl = "/api/v1/users/" + user + "/clients";
+      const res = await fetch(clientsUrl);
+      clients = Object.entries(await res.json());
+      console.log("Fetched clients", clients);
+      return clients
+  }
+
+  function createClientList() { 
+      if (user) {
+          const elem = document.getElementById("client_list");
+          getClients().then( clients => {
+              if (clients.length < 1) { 
+                  elem.innerHTML =  '<a href="#" onclick="handleCreate();">Create</a>';
+                }else{ 
+                    clients.forEach( client => { 
+                        tunnelid = client[0];
+                        elem.innerHTML += '<img src="/api/v1/users/' + user + '/clients/' + tunnelid + '?format=qrcode" class="qrcode" alt="Client config QR"/>';
+                        elem.innerHTML += '<div class="download"> <a href="/api/v1/users/' + user + '/clients/' + tunnelid + '?format=config">Download Config</a></div>';
+                        elem.innerHTML += '<div class="delete"><a href="#" onclick=handleDelete(' + tunnelid +'); window.location.reload();>Delete</a></div>';
+
+                    });
+                }
+          });
+      }
+  } 
+
+  async function handleDelete(clientId) {
+      const clientUrl = `/api/v1/users/` + user + `/clients/` + clientId;
+      const res = await fetch(clientUrl, {
+          method: "DELETE",
+        });
+      await res;
+      window.location.reload();
+    }
+
+  async function handleCreate(event) {
+      const clientsUrl = "/api/v1/users/" + user + "/clients";
+      const client = {};
+      client.Name = user;
+      client.Notes = "Default client";
+      client.generatePSK = false;
+      const res = await fetch(clientsUrl, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+            },
+          body: JSON.stringify(client),
+      }).then(response => {
+            return response.json();
+      }).then(data => {
+            if (typeof data.Error != "undefined") {
+              console.log(data.Error);
+              alert(data.Error);
+            }else{
+              console.log("New client added", data);
+            }
+      });
+    window.location.reload();
+  }
+
+  window.addEventListener('load', function () {
+    user = getUserFromCookie();
+    createClientList();
+  });
+</script>
+
+<header>Cloudburst</header>
+<div id="client_list"></div>
+<footer>By SIDN labs, powered by wg-ui, wg-ui-auto-user.</footer>
+</body>
+</html>
+-->
